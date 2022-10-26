@@ -1,5 +1,7 @@
 package org.globant.university.data;
 
+import java.util.List;
+
 public class Student {
     static int consecutive = 1000;
     private String firstName;
@@ -29,11 +31,12 @@ public class Student {
         return id;
     }
 
+
     @Override
     public String toString(){
-        return "Name: " + this.fullName + "\n" +
-                "Age: " + this.age + "\n" +
-                "Id: " + this.id + "\n" ;
+        return " Name: " + this.fullName + "\n" +
+                " Age: " + this.age + "\n" +
+                " Id: " + this.id + "\n" ;
     }
 
     //incrementar la edad

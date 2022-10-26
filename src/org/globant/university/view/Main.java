@@ -1,8 +1,5 @@
 package org.globant.university.view;
-import org.globant.university.data.Student;
-import org.globant.university.data.Teacher;
-import org.globant.university.data.TeacherFullTime;
-import org.globant.university.data.TeacherPartTime;
+import org.globant.university.data.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,6 +21,19 @@ public class Main {
         System.out.println(teacher3);
         TeacherPartTime teacher4 = new TeacherPartTime("Soy Partime", 1000, 5);
         System.out.println(teacher4);
+
+        Course course1 = new Course("Biology", 101);
+        course1.setTeacher(teacher1);
+        course1.addStudent(student1);
+        course1.addStudent(student2);
+        course1.addStudent(student3);
+        System.out.println(course1.addStudent(student1));
+        course1.addStudent(student2);
+        course1.addStudent(student3);
+
+        //System.out.println(course1.printStudentsList());
+        System.out.println(course1);
+
     }
 
 

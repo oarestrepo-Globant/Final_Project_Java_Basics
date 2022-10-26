@@ -6,11 +6,12 @@ public abstract class Teacher {
     public Teacher(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }
-
+    public String getNameUpperCase() {
+        return name.toUpperCase();
+    }
     abstract protected double calculateSalary();
 
     @Override
