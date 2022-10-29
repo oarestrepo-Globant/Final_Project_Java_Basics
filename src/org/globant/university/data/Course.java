@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
+    //CADA COURSE DEBERIA TENER ID?
     private String name;
     private int classRoomNumber;
     private Teacher assignedTeacher;
-    List<Student> studentsList;
+    protected List<Student> studentsList;
 
     public Course(String name, int classRoomNumber) {
         this.name = name;
@@ -15,49 +16,58 @@ public class Course {
         this.studentsList = new ArrayList<>();
     }
 
+    public Course(String name, int classRoomNumber, Teacher assignedTeacher) {
+        this.name = name;
+        this.classRoomNumber = classRoomNumber;
+        this.assignedTeacher = assignedTeacher;
+        this.studentsList = new ArrayList<>();
+    }
+
     public String getName() {
-        return name;
+        return name.toUpperCase();
     }
 
     public int getClassRoomNumber() {
         return classRoomNumber;
     }
-
-    public Teacher getAssignedTeacher() {
-        return assignedTeacher;
-    }
-
-    public List<Student> getStudentsList() {
-        return studentsList;
-    }
     public String printStudentsList(){
-        String stringList ="";
+        String stringList = "";
         for (Student student: studentsList) {
             stringList = stringList + student;
         }
         return stringList;
     }
-    public String addStudent(Student student){
-        for (Student studentToCompare: studentsList) {
-            if(student.getId() == studentToCompare.getId()){
-                return "The student " + student.getFullName() + " is already on the list \n";
-            }
-        }
-        studentsList.add(student);
-        return "The student has been successfully added";
+    public Teacher getAssignedTeacher() {
+        return assignedTeacher;
+    }
+    public void setTeacher(Teacher teacher){
+        this.assignedTeacher = teacher;
     }
 
-    public void setTeacher(Teacher teacher){
-        assignedTeacher = teacher;
+    public void addStudent(Student student){
+        for (Student studentToCompare: this.studentsList)
+            if (student.getId() == studentToCompare.getId()) {
+                return;
+            }
+        this.studentsList.add(student);
+    }
+    public String verifyEnrolledStudent(int studentId){
+        String enrolledCourse = "";
+        for (Student student:studentsList) {
+            if(studentId == student.getId()){
+                enrolledCourse = getName() + "\n";
+            }
+        }
+        return enrolledCourse;
     }
 
     @Override
     public String toString() {
-        return"***** " + name.toUpperCase() +" STUDENTS LIST *****\n" +
-                " CLASSROOM #" + classRoomNumber + "\n" +
-                " TEACHER: " + assignedTeacher.getNameUpperCase() + "\n\n" +
+        return ">>>>> " + name.toUpperCase() +" STUDENTS LIST <<<<< \n" +
+                " TEACHER: " + assignedTeacher.getNameUpperCase() + "\n" +
+                " CLASSROOM #" + classRoomNumber + "\n\n" +
                 " STUDENTS \n" +
-                printStudentsList();
+                printStudentsList() + "\n";
     }
 
 

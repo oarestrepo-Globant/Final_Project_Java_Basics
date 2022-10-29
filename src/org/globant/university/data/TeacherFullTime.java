@@ -6,13 +6,14 @@ public class TeacherFullTime extends Teacher {
     private double salary;
     static private double multiplier = 1.1;
     private final LocalDate entryDate;
-    public TeacherFullTime(String name, double salary) {
-        super(name);
+
+    public TeacherFullTime(String firstName, String lastName, double salary) {
+        super(firstName,lastName, "Full Time");
         this.entryDate = LocalDate.now();
         this.salary = salary;
     }
-    public TeacherFullTime(String name, double salary, String entryDate){
-        super(name);
+    public TeacherFullTime(String firstName, String lastName, double salary, String entryDate){
+        super(firstName,lastName, "Full Time");
         this.salary = salary;
         this.entryDate = LocalDate.parse(entryDate);
     }

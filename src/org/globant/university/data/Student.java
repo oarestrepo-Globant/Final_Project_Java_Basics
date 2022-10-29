@@ -1,15 +1,14 @@
 package org.globant.university.data;
 
-import java.util.List;
-
 public class Student {
     static int consecutive = 1000;
     private String firstName;
     private String lastName;
     final private String fullName;
+    //puedo usar age con localDate, asi se actualiza siempre la edad
     private int age;
     final private int id;
-
+    //NO PUEDE HABER DOS STUDIANTES IGUALES, TENDRIA QUE CREAR UN ATRIBUTO DNI
     public Student(String firstName, String lastName, int age){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,14 +18,6 @@ public class Student {
         this.id = consecutive;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
     public int getId() {
         return id;
     }
@@ -34,10 +25,10 @@ public class Student {
 
     @Override
     public String toString(){
-        return " Name: " + this.fullName + "\n" +
-                " Age: " + this.age + "\n" +
-                " Id: " + this.id + "\n" ;
+        return ">> Name: " + this.fullName + "\n" +
+                "   Age: " + this.age + "\n" +
+                "   Id: " + this.id + "\n" ;
     }
-
+    //NO PUEDE HABER DOS STUDIANTES IGUALES, TENDRIA QUE CREAR UN ATRIBUTO DNI
     //incrementar la edad
 }
