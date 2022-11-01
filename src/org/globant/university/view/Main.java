@@ -39,15 +39,15 @@ public class Main {
                    createCourse(myUniversity);
                    break;
                case 5:
-                   //search courses of student
+                   printStudentCourses(myUniversity);
+               break;
+               case 6:
+                   exit = true;
                    break;
-//               case 6:
-//                   exit = true;
                default :
                    System.out.println("Please enter option between 1 - 6 \n");
                    break;
            }
-
        }while(option != 6);
     }
 
@@ -62,26 +62,29 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         int counter = 0;
-        System.out.println("***** GLOBANT COURSES *****");
+        System.out.println("***** GLOBANT COURSES *****\n");
+
         for (Course course: university.getCoursesList()) {
             counter++;
             System.out.println(counter + ". " + university.getCourseNameFromCoursesList(course));
         }
-        counter++;
-        System.out.println(counter + ". Exit\n");
+        /*counter++;
+        System.out.println(counter + ". Exit\n");*/
+        System.out.println( "Select an option to print related data");
 
         int option = scan.nextInt();
         scan = new Scanner(System.in);
         System.out.println(university.getCourseByIndex(option - 1));
     }
     public static boolean verifyStringIsWord(String word){
-        return word.matches("^[a-zA-Z]*$");
+        return word.matches("^[a-zA-Z ]*$");
     }
     public static boolean verifyStringIsInt(String word){
         return word.matches("[0-9]+");
     }
     public static void createStudent(University university){
         Scanner scan = new Scanner(System.in);
+
         boolean  nameAccepted;
         String firstName ;
         do{
@@ -129,26 +132,53 @@ public class Main {
         int age = parseInt(stringAge);
         System.out.println("");
 
-        university.createStudent(firstName, lastName, age);
-        System.out.println("The student " + firstName + " " + lastName + " has been created\n");
+        //obtener el curos para añadir el estudiant
+        //1. print courses list Names
+        //2. capturar la opcion seleccionada
+        //3. obtener el Course dada la opcion seleccionada
+        //4. addStudentToCourse(Student, Course)
+        int counter = 0;
+
+        boolean verified = true;
+        do{
+            System.out.println("***** GLOBANT COURSES *****\n");
+
+            for (Course course: university.getCoursesList()) {
+                counter++;
+                System.out.println(counter + ". " + university.getCourseNameFromCoursesList(course));
+            }
+            System.out.println( "Select a course to add student");
+
+        }while(!verified);
+
+
+        int option = scan.nextInt();
+        scan = new Scanner(System.in);
+        Course course = university.getCourseByIndex(option - 1);
+
+
+        Student student = university.createStudent(firstName, lastName, age);
+        university.addStudentToCourse( student, course);
+        System.out.println("The student " + firstName + " " + lastName + " has been created");
+        System.out.println(student.getFullName() + " has been added to " + course.getName() + " course\n" );
     }
     public static void createCourse(University university){
         Scanner scan = new Scanner(System.in);
 
-        boolean verifiedFirstName;
+        boolean verifiedCourseName;
         String courseName;
         do{
             System.out.println(" > Enter the name of the course");
             courseName = scan.nextLine();
             scan = new Scanner(System.in);
 
-            verifiedFirstName = verifyStringIsWord(courseName);
-
-            if(!verifiedFirstName){
+            verifiedCourseName = verifyStringIsWord(courseName);
+            //deberia comprobar si el nombre ya existe
+            if(!verifiedCourseName){
                 System.out.println(" ERROR: This field only accepts letters\n");
-                verifiedFirstName = false;
+                verifiedCourseName = false;
             }
-        }while(!verifiedFirstName);
+        }while(!verifiedCourseName);
         System.out.println("");
 
         boolean verifiedNumber;
@@ -159,19 +189,102 @@ public class Main {
             scan = new Scanner(System.in);
 
             verifiedNumber = verifyStringIsInt(classRoomNumber);
-
+            //deberia comprobar si el classroom ya existe
             if(!verifiedNumber){
                 System.out.println(" ERROR: This field only accepts numbers\n");
                 verifiedNumber = false;
             }
         }while(!verifiedNumber);
+
         int courseRoomNumber = parseInt(classRoomNumber);
         System.out.println("");
 
-        // imprimir lista de nombres de profesores
-        // me dan el nombre/id de un profesor
-        // lo busco en university.teachersList
-        // le paso el teacher a university.createCourse()
+        Teacher teacher = getTeacherToBeAssigned(university);
+        System.out.println("The course " + courseName + " has been created\n");
+        university.createCourse(courseName, courseRoomNumber, teacher);
+
+        //      >>>>>   ADD STUDENT TO COURSE  <<<<<
+        addStudentToCourse(university);
+
+    }
+    public static Teacher getTeacherToBeAssigned(University university){
+        Scanner scan = new Scanner(System.in);
+        int counter = 0;
+
+        System.out.println("***** GLOBANT TEACHERS *****");
+        for (Teacher teacher: university.getTeachersList()) {
+            counter++;
+            System.out.println(counter + ". " + teacher.getFullName());
+        }
+
+        int option = scan.nextInt();
+        scan = new Scanner(System.in);
+        Teacher teacherToBeAssigned = university.getTeacherByIndex(option - 1);
+        return teacherToBeAssigned;
+    }
+
+    public static void printStudentCourses(University university){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println(" > Enter the student Id");
+        int id = scan.nextInt();
+        scan = new Scanner(System.in);
+
+        Student student =  university.getStudentById(id);
+        System.out.println(">>>>> " + student.getFullName() +  " ENROLLED COURSES <<<<<");
+        System.out.println(university.getEnrolledCoursesOfStudent(id) + "\n");
+    }
+
+    public static void addStudentToCourse(University university){
+        Scanner scan = new Scanner(System.in);
+        int studentId = 0;
+        String option = "";
+
+        boolean correctOption = true;
+        do{
+            System.out.println("Add student to course?\n" +
+                    "1. Yes\n" +
+                    "2. No\n");
+            option = scan.nextLine();
+            scan = new Scanner(System.in);
+            if(verifyStringIsInt(option) && (option.equals("1") || option.equals("2"))){
+                correctOption = true;
+            } else{
+                correctOption = false;
+                System.out.println("Please enter number between 1 - 2\n");
+            }
+        }while(!correctOption);
+
+        boolean exit = false;
+        switch(option){
+            case "1":
+                //1. ME PASAN EL ID DEL ESTUDIANTE A AGREGAR
+
+                System.out.println(" > Enter student Id");
+                studentId = scan.nextInt();
+                scan = new Scanner(System.in);
+
+                //2. BUSCO EL ESTUDIANTE Y LO DEVUELVO
+                Student student = university.getStudentById(studentId);
+
+                //3. Obtengo el curso al que estoy añadiendo estudiantes
+                Course createdCourse = university.getLastCourseCreated();
+
+                //4. añado el estudiante al curso si encuentra al estudiante
+                if(student.getId() == 0){
+                    System.out.println("There is not student with id #" + studentId + "\n");
+                    addStudentToCourse(university);
+                }
+                else {
+                    university.addStudentToCourse(student, createdCourse);
+                    System.out.println(" > Student succesfully added\n");
+                    addStudentToCourse(university);
+                }
+                break;
+            case "2":
+                exit = true;
+                break;
+        }
     }
 }
 
