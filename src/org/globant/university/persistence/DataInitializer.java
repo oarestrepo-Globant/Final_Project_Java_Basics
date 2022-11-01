@@ -16,18 +16,18 @@ public class DataInitializer {
         university.createTeacherFullTime("Gilberto", "Rodriguez", 10000,"2010-09-12");
         university.createTeacherFullTime("Ana","Navia", 10000, "2013-01-02");
         university.createTeacherPartTime("Nubia","Coronado", 1000, 3.5);
-        university.createTeacherPartTime("Nubia","Coronado", 1000, 5);
+        university.createTeacherPartTime("Jaime","Rios", 1000, 5);
 
     }
     private static void loadStudentsIntoUniversity(University university){
-        university.createStudent("Oscar", "Restrepo", 33);
-        university.createStudent("Andres", "Borrero", 22);
-        university.createStudent("Luisa", "Escobar", 25);
-        university.createStudent("Daniela", "Cordoba", 29);
-        university.createStudent("Martha", "Uribe", 20);
-        university.createStudent("Dario", "Duque", 31);
-        university.createStudent("Fernanda", "Cordero", 28);
-        university.createStudent("Gloria", "Farias", 35);
+        university.createStudentInitializer("Oscar", "Restrepo", 33);
+        university.createStudentInitializer("Andres", "Borrero", 22);
+        university.createStudentInitializer("Luisa", "Escobar", 25);
+        university.createStudentInitializer("Daniela", "Cordoba", 29);
+        university.createStudentInitializer("Martha", "Uribe", 20);
+        university.createStudentInitializer("Dario", "Duque", 31);
+        university.createStudentInitializer("Fernanda", "Cordero", 28);
+        university.createStudentInitializer("Gloria", "Farias", 35);
 
     }
     private static void loadCoursesIntoUniversity(University university){

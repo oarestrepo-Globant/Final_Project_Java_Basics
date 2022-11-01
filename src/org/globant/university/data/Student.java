@@ -5,10 +5,15 @@ public class Student {
     private String firstName;
     private String lastName;
     final private String fullName;
-    //puedo usar age con localDate, asi se actualiza siempre la edad
     private int age;
     final private int id;
-    //NO PUEDE HABER DOS STUDIANTES IGUALES, TENDRIA QUE CREAR UN ATRIBUTO DNI
+    public Student(){
+        this.firstName = "";
+        this.lastName = "";
+        this.fullName = this.firstName + " " + this.lastName;
+        this.age = 0;
+        this.id = consecutive - consecutive;
+    }
     public Student(String firstName, String lastName, int age){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,6 +27,9 @@ public class Student {
         return id;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
 
     @Override
     public String toString(){
@@ -29,6 +37,5 @@ public class Student {
                 "   Age: " + this.age + "\n" +
                 "   Id: " + this.id + "\n" ;
     }
-    //NO PUEDE HABER DOS STUDIANTES IGUALES, TENDRIA QUE CREAR UN ATRIBUTO DNI
-    //incrementar la edad
+
 }

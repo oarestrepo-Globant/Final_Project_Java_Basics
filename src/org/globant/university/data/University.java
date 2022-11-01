@@ -16,13 +16,6 @@ public class University {
         this.teachersList = new ArrayList<>();
         this.coursesList = new ArrayList<>();
     }
-    public String getStudentsList() {
-        String print = "";
-        for (Student student: studentsList) {
-           print =  print + student;
-        }
-        return "***** GLOBANT STUDENTS LIST ***** \n\n" + print;
-    }
     public Student getStudentByIndex(int index){
         return studentsList.get(index);
     }
@@ -39,59 +32,9 @@ public class University {
     public String getCourseNameFromCoursesList(Course course){
         return course.getName();
     }
-    public String getCourseFullData(Course course) {
-            String print = "";
-            print = print + course;
-        return "***** GLOBANT COURSES LIST ***** \n\n" + print;
-    }
-
     public List<Teacher> getTeachersList() {
         return teachersList;
     }
-
-    public void createCourse(String name, int classRoomNumber, Teacher teacherAssigned){
-        for (Course courseToCompare: this.coursesList) {
-            if(name.equals(courseToCompare.getName()) ){
-                return;
-            }
-            if(classRoomNumber == courseToCompare.getClassRoomNumber()){
-                return;
-            }
-            if(courseToCompare.getAssignedTeacher() == teacherAssigned){
-                return;
-            }
-        }
-        Course course = new Course(name, classRoomNumber, teacherAssigned);
-        coursesList.add(course);
-    };
-
-    public void createStudent(String firstName, String lastName, int age){
-        Student student = new Student(firstName, lastName, age);
-        this.studentsList.add(student);
-    }
-
-    public void addStudentToCourse(Student student, Course course){
-        course.addStudent(student);
-    };
-
-    //NO PUEDE HABER DOS TEACHERS IGUALES
-    public String createTeacherFullTime(String firstName, String lastName, double salary){
-        Teacher teacherFullTime = new TeacherFullTime(firstName, lastName, salary);
-        this.teachersList.add(teacherFullTime);
-        return teacherFullTime.getFullName() + " created as a fullTime";
-    }
-
-    public void createTeacherFullTime(String firstName, String lastName, int salary, String entryDate){
-        Teacher teacherFullTime = new TeacherFullTime(firstName, lastName, salary, entryDate);
-        this.teachersList.add(teacherFullTime);
-    }
-
-    //NO PUEDE HABER DOS TEACHERS IGUALES
-    public void createTeacherPartTime(String firstName, String lastName, double salary, double hours){
-        Teacher teacherPartTime = new TeacherPartTime(firstName, lastName, salary, hours);
-        this.teachersList.add(teacherPartTime);
-    }
-
     public String getEnrolledCoursesOfStudent(int id){
         String enrolledCoursesOfStudent = "";
         for (Course course: this.coursesList) {
@@ -100,5 +43,57 @@ public class University {
         }
         return enrolledCoursesOfStudent.equals("") ? "The student has not enrolled courses yet" : enrolledCoursesOfStudent;
     };
+    public Student getStudentById(int id){
+        Student studentFounded = new Student();
+        for(Student student: studentsList){
+            if(student.getId() == id){
+                studentFounded = student;
+            }
+        }
+        return studentFounded ;
+    }
+
+    public Course getLastCourseCreated(){
+        Course course = getCourseByIndex(coursesList.size() - 1);
+        return course;
+    }
+
+    public String createCourse(String name, int classRoomNumber, Teacher teacherAssigned){
+        String message = "";
+        for (Course courseToCompare: this.coursesList) {
+            //verifica que no haya dos cursos con nombres iguales
+            if(name.equals(courseToCompare.getName()) ){
+                message = "The course " +  name + " already exists";
+                return message ;
+            }
+        }
+        message = "The course has been successfully created";
+        Course course = new Course(name, classRoomNumber, teacherAssigned);
+        coursesList.add(course);
+        return message;
+    };
+
+    public void createStudentInitializer(String firstName, String lastName, int age){
+        Student student = new Student(firstName, lastName, age);
+        this.studentsList.add(student);
+    }
+    public Student createStudent(String firstName, String lastName, int age){
+        Student student = new Student(firstName, lastName, age);
+        return student;
+    }
+
+    public void addStudentToCourse(Student student, Course course){
+        course.addStudent(student);
+    };
+
+    public void createTeacherFullTime(String firstName, String lastName, int salary, String entryDate){
+        Teacher teacherFullTime = new TeacherFullTime(firstName, lastName, salary, entryDate);
+        this.teachersList.add(teacherFullTime);
+    }
+
+    public void createTeacherPartTime(String firstName, String lastName, double salary, double hours){
+        Teacher teacherPartTime = new TeacherPartTime(firstName, lastName, salary, hours);
+        this.teachersList.add(teacherPartTime);
+    }
 
 }

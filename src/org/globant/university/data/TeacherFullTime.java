@@ -7,11 +7,6 @@ public class TeacherFullTime extends Teacher {
     static private double multiplier = 1.1;
     private final LocalDate entryDate;
 
-    public TeacherFullTime(String firstName, String lastName, double salary) {
-        super(firstName,lastName, "Full Time");
-        this.entryDate = LocalDate.now();
-        this.salary = salary;
-    }
     public TeacherFullTime(String firstName, String lastName, double salary, String entryDate){
         super(firstName,lastName, "Full Time");
         this.salary = salary;
@@ -31,7 +26,5 @@ public class TeacherFullTime extends Teacher {
         }
     }
 
-    //salary return solo dos decimales
-    //generar reporte con fecha de corte futura
 }
 
